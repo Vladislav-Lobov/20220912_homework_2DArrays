@@ -1,0 +1,91 @@
+//0005 Задача 62. Напишите программу, которая заполнит спирально массив 4 на 4.
+
+void Print2dArray(int[,] array)
+{
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            Console.Write($"{array[i, j]} ");
+        }
+        Console.WriteLine();
+    }
+}
+
+int[,] GetSpiralArray(int m, int n)
+{
+    int[,] array = new int[m, n];
+    int top = 0, bottom = m - 1;
+    int left = 0, right = n - 1;
+    int index = 0;
+
+    while (true)
+    {
+        if (left > right)
+        {
+            break;
+        }
+        // печатаем верхнюю строку
+        for (int i = left; i <= right; i++)
+        {
+            array[top, i] = index++;
+        }
+        top++;
+
+        if (top > bottom)
+        {
+            break;
+        }
+        // печатаем правый столбец
+        for (int i = top; i <= bottom; i++)
+        {
+            array[i, right] = index++;
+        }
+        right--;
+
+        if (left > right)
+        {
+            break;
+        }
+        // печатаем нижнюю строку
+        for (int i = right; i >= left; i--)
+        {
+            array[bottom, i] = index++;
+        }
+        bottom--;
+
+        if (top > bottom)
+        {
+            break;
+        }
+        // печатаем левый столбец
+        for (int i = bottom; i >= top; i--)
+        {
+            array[i, left] = index++;
+        }
+        left++;
+    }
+    return array;
+}
+
+
+
+
+
+Console.WriteLine("Введите размер массива m:");
+bool isNumberM = int.TryParse(Console.ReadLine(), out int m);
+
+
+Console.WriteLine("Введите размер массива n:");
+bool isNumberN = int.TryParse(Console.ReadLine(), out int n);
+
+if (!isNumberM || m < 1 || !isNumberN || n < 1)
+{
+    Console.WriteLine("Некорректный ввод размера массива");
+    return;
+}
+
+int[,] newArray = new int[m, n];
+newArray = GetSpiralArray(m, n);
+Print2dArray(newArray);
+
